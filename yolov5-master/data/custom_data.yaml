@@ -1,0 +1,13 @@
+train: "C:\\Users\\Asus\\Desktop\\DLCA2\\yolov5-master\\data\\train"
+val: "C:\\Users\\Asus\\Desktop\\DLCA2\\yolov5-master\\data\\valid"
+
+
+nc: 1
+names: ['Ambulance']
+
+roboflow:
+  workspace: vehicle-detection-iva8f
+  project: vehicle_detection-etqqt
+  version: 2
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/vehicle-detection-iva8f/vehicle_detection-etqqt/dataset/2

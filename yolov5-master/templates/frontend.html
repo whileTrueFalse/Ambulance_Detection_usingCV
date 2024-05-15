@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Ambulance Vehicle Detection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+        }
+
+        .btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        #output {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            white-space: pre-wrap; /* Preserve line breaks */
+        }
+
+        .stop-btn {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Smart Ambulance Vehicle Detection</h1>
+        <form id="commandForm" action="/run_command" method="post">
+            <label for="command">Enter command:</label><br>
+            <textarea id="command" name="command" rows="4" cols="50"></textarea><br>
+            <button class="btn" type="submit">Run Command</button>
+        </form>
+        <button class="btn stop-btn" onclick="stopExecution()">Stop Execution</button><br>
+        <div id="output"></div>
+    </div>
+
+    <!-- Socket.IO library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+
+    <script>
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        socket.on('output', function(msg) {
+            var outputDiv = document.getElementById('output');
+            outputDiv.innerHTML += msg + '<br>';
+        });
+
+        function stopExecution() {
+            fetch('/stop_execution', { method: 'POST' })
+                .then(response => response.text())
+                .then(data => document.getElementById('output').innerText = data);
+        }
+    </script>
+</body>
+</html>

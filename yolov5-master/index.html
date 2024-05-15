@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAVED</title>
+</head>
+<body style="background-color: black; color: green;">
+    <h1 style="font-size: 24px; font-weight: bold;">Smart Ambulance Vehicle Detection</h1>
+    <form action="/run_command" method="post">
+        <label for="command">Enter command:</label><br>
+        <textarea id="command" name="command" rows="4" cols="50"></textarea><br>
+        <input type="submit" value="Run Command">
+    </form>
+    <button onclick="stopExecution()">Stop Execution</button><br>
+    <div id="output"></div>
+    <script>
+        function stopExecution() {
+            fetch('/stop_execution', { method: 'POST' })
+                .then(response => response.text())
+                .then(data => document.getElementById('output').innerText = data);
+        }
+    </script>
+</body>
+</html>
